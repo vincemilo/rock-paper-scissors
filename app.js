@@ -1,89 +1,94 @@
-function main(){
-   const theList = [];
-   let keepGoing = 1;
-   let hValue = 0;
-   //just testing something
+const theList = [];
 
-   while (keepGoing < 4 && keepGoing > 0 ) {      
-        hValue = parseInt(prompt('Enter 1 for Rock, 2 for Paper, or 3 for Scissors (enter any other number to end the game): '));
-        theList.push(battle(hValue));
-        keepGoing = hValue;
-   }
-      
-   console.log ('Human is scared? Until next time...');      
-   console.log ('\nGame History:', theList);
-   
-   let compWins = 0;
-   let humanWins = 0;
-   let ties = 0;
+const results = document.querySelector('#results');
+const results2 = document.querySelector('#results2');
+const results3 = document.querySelector('#results3');
+const score = document.querySelector('#score');
+const score2 = document.querySelector('#score2');
+const divs = document.querySelectorAll('div');
 
-    for(let i = 0; i < theList.length; i++){
-        if(theList[i] == 'C'){
-            compWins++;
-        } else if (theList[i] == 'H'){
-            humanWins++;
-        } else if (theList[i] == 'T') {
-            ties++;
+let compWins = 0;
+let humanWins = 0;
+let ties = 0;
+
+function tally(winner){
+    if (winner == 'C') {
+        compWins++;
+    } else if (winner == 'H') {
+        humanWins++;
+    } else if (winner == 'T') {
+        ties++;
+    };
+
+    score.textContent = `Human: ${humanWins} Computer: ${compWins} Ties: ${ties}`;
+     
+    if (compWins + humanWins + ties == 5) {
+        if (compWins > humanWins){
+            score2.textContent = 'Computer wins! The flesh is weak!';
+        } else if (humanWins > compWins){
+            score2.textContent = 'Human wins?! I shall have my revenge!';
+        } else {
+            score2.textContent = 'How boring, a tie.';
         }
     }
+};
    
-    if (compWins > humanWins){
-       console.log('Too bad, human, Computer had',compWins, 'wins. Human only had',humanWins,'wins. Sad!');
-    } else if (humanWins > compWins){
-       console.log('Human had',humanWins,'wins. Computer had',compWins,'wins. I shall have my revenge!');
-    } else {
-       console.log('How boring, a tie. We both had',humanWins, 'wins. One more game?');
+function playRound(num){
+    if (compWins + humanWins + ties >= 5) {
+        divs.forEach(div => {
+            div.textContent = '';
+        })
+        compWins = 0;
+        humanWins = 0;
+        ties = 0;
+        console.log(compWins + humanWins + ties);
     }
-    console.log('BTW, there were',ties,'ties.');
-   
-   
-    function battle(num){
     let cValue = Math.floor(Math.random() * 3 + 1);
-    console.log(cValue);
+    results.textContent = `Human selected ${playerSelection(num)}.`;
+    results2.textContent = `Computer selected ${playerSelection(cValue)}.`;
     let winner = '';
-
-    function select(val){
-        let value = '';
-        if (val == 1){
-            value = 'rock';
-        } else if (val == 2){
-            value = 'paper';
-        } else if (val == 3) {
-            value = 'scissors';
-        } 
-        return value;
-    }
-
-    let hSelect = select(num);
-    let cSelect = select(cValue);
-
-    console.log('Human selected', hSelect);
-    console.log('Computer selected',cSelect);
-
     if (num == 1 && cValue == 2){
-        console.log('Computer is victorious! Paper cover rock!');
+        results3.textContent = 'Computer is victorious! Paper cover rock!';
         winner = 'C';
     } else if (num == 1 && cValue == 3){
-        console.log('Human is fortunate. Rock smash scissors...for now.');
+        results3.textContent = 'Human is fortunate. Rock smash scissors...for now.';
         winner = 'H';
     } else if (num == 2 && cValue == 1){
-        console.log('Paper cover rock? You will regret this!');
+        results3.textContent = 'Paper cover rock? You will regret this!';
         winner = 'H';
     } else if (num == 2 && cValue == 3){
-        console.log('Foolish human, scissor cuts paper!');
+        results3.textContent = 'Foolish human, scissor cuts paper!';
         winner = 'C';
     } else if (num == 3 && cValue == 1){
-        console.log('I regret to inform you, human, rock smashes scissors!');
+        results3.textContent = 'I regret to inform you, human, rock smashes scissors!';
         winner = 'C';
     } else if (num == 3 && cValue == 2){
-        console.log('Scissors cuts paper? Clever...for a human.');
+        results3.textContent = 'Scissors cuts paper? Clever...for a human.';
         winner = 'H';
     } else {
-        console.log("Lucky human. It's a tie.");
+        results3.textContent = "Lucky human. It's a tie.";
         winner = 'T';
     }
-    return winner;
-    }
-}
+    tally(winner);
+};
 
-main()
+const buttons = document.querySelectorAll('.button');
+
+buttons.forEach((button => {
+    button.addEventListener('click', function (e) {
+        playRound(e.target.id);
+    });
+}));
+
+
+function playerSelection(val){
+    let value = '';
+    if (val == 1){
+        value = 'rock';
+    } else if (val == 2){
+        value = 'paper';
+    } else if (val == 3) {
+        value = 'scissors';
+    }
+    return value;
+    };
