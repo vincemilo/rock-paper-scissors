@@ -1,0 +1,29 @@
+body {
+    height: 100vh;
+    margin: 10vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.buttons, .results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.results {
+    flex-direction: column;
+    padding: 16px;
+}
+
+button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+}
+
+#reset {
+    visibility: hidden;
+}

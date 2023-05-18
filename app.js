@@ -6,6 +6,7 @@ const results3 = document.querySelector('#results3');
 const score = document.querySelector('#score');
 const score2 = document.querySelector('#score2');
 const divs = document.querySelectorAll('div');
+const reset = document.querySelector('#reset');
 
 let compWins = 0;
 let humanWins = 0;
@@ -30,10 +31,15 @@ function tally(winner){
         } else {
             score2.textContent = 'How boring, a tie.';
         }
+        score2.textContent += ' Click a button above to play again.'
+        compWins = 0;
+        humanWins = 0;
+        ties = 0;
     }
 };
    
 function playRound(num){
+    score2.textContent = '';
     if (compWins + humanWins + ties >= 5) {
         divs.forEach(div => {
             div.textContent = '';
